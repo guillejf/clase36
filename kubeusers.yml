@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeservice5
+spec:
+  selector:
+    app: kubeusers5
+  ports:
+    - port: 80
+      targetPort: 8087
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubedeploy5
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kubeusers5
+  template:
+    metadata:
+      labels:
+        app: kubeusers5
+    spec:
+      containers:
+        - name: kubecontainers5
+          image: guillejf/usercreator5:1.0.0
+          ports:
+            - containerPort: 8087
+          imagePullPolicy: Always
